@@ -17,4 +17,3 @@ spec:
         image: nginx:mainline-alpine:latest
         ports:
         - containerPort: 80
-test

@@ -1,0 +1,58 @@
+---
+kind: Service      # Create new service
+apiVersion: v1     
+metadata:
+  name: my-service # Name of the service
+spec:
+  selector:
+    app: animals    # Run on any pod with label - app:myapp
+  type: LoadBalancer  
+  ports:          # Map incoming port to target port
+  - name: http    # Setting multiple ports listterns 
+    protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: animal-bear
+spec:
+  selector: 
+    matchLabels:
+      app: animals  
+  replicas: 2 # tells deployment to run 2 pods matching the template using the ReplicaSet
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: animals
+    spec:
+      containers:
+      - name: bear
+        image: supergiantkir/animals:bear
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: animal-moose
+spec:
+  selector: 
+    matchLabels:
+      app: animals  
+  replicas: 2 # tells deployment to run 2 pods matching the template using the ReplicaSet
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: animals
+    spec:
+      containers:
+      - name: moose
+        image: supergiantkir/animals:moose
+        ports:
+        - containerPort: 80
