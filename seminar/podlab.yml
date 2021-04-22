@@ -1,10 +1,19 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: cuda-test
+  name: nginx-deployment-test
 spec:
-  containers:
-    - name: cuda-test
-      image: "yanivomc/spring-music:latest"
-  nodeSelector:
-    env: prod
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 
+  template: 
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:mainline-alpine
+        ports:
+        - containerPort: 80
