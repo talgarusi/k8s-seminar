@@ -11,4 +11,4 @@ spec:
  - name: springapp
    image: yanivomc/spring-music:latest
    ports: 
-   - containerPort:
+   - containerPort: 8080
